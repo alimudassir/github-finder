@@ -3,6 +3,10 @@ class UI {
     this.profile = document.getElementById('profile');
   }
 
+  /**
+   * Invoked to generate UI for user profile
+   * @param {JSONObject} user - input user
+   */
   showProfile(user) {
     this.profile.innerHTML = `
       <div class = "card card-body mb-3">
@@ -31,10 +35,18 @@ class UI {
     `;
   }
 
+  /**
+   * Invoked to reset UI for user profile
+   */
   clearProfile() {
     this.profile.innerHTML = '';
   }
 
+  /**
+   * Invoked to generate UI for alert when no user is found
+   * @param {String} message - message to be displayed
+   * @param {String} className - class for alert div
+   */
   showAlert(message, className) {
     this.clearAlert();
     const div = document.createElement('div');
@@ -48,10 +60,38 @@ class UI {
     }, 3000);
   }
 
+  /**
+   * Invoked to clear UI for alert
+   */
   clearAlert() {
     let currentAlert = document.querySelector('.alert');
     if (currentAlert) {
       currentAlert.remove();
     }
+  }
+
+  /**
+   * Invoked to generate UI for user repos
+   * @param {JSONObject} repos - input repo object
+   */
+  showRepos(repos) {
+    let output = '';
+    repos.forEach((repo) => {
+      output += `
+        <div class="card card-body mb-2">
+          <div class="row">
+            <div class="col-md-6">
+              <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+            </div>
+            <div class="col-md-6">
+              <span class="badge badge-primary">Stars : ${repo.stargazers_count}</span>
+              <span class="badge badge-secondary">Watchers : ${repo.watchers_count}</span>
+              <span class="badge badge-success">Forks : ${repo.forks_count}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    document.getElementById('repos').innerHTML = output;
   }
 }
